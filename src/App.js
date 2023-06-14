@@ -1,58 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+// App.js
 
-function App() {
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  Box,
+  createTheme,
+  CssBaseline,
+  Stack,
+  ThemeProvider,
+} from "@mui/material";
+import LoginPage from "./components/LoginPage";
+import HomePage from "./components/HomePage";
+import Sidebar from "./components/common/Sidebar";
+import Feed from "./components/common/Feed";
+import Rightbar from "./components/common/Rightbar";
+import Navbar from "./components/common/Navbar";
+import Add from "./components/common/Add";
+
+const App = () => {
+  const [mode, setMode] = useState("light");
+  const darkMode = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={darkMode}>
+        {/* <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router> */}
+        {/* material ui: to box component we can pass which html elements we would like to use using component props. Example component="span" */}
+        <Box bgcolor={"background.default"} color={"text.primary"}>
+          <Navbar />
+          <Stack direction="row" justifyContent="space-between" spacing={2}>
+            <Sidebar setMode={setMode} mode={mode} />
+            <Feed />
+            <Rightbar />
+          </Stack>
+          <Add />
+        </Box>
+      </ThemeProvider>
+    </>
   );
-}
+};
 
 export default App;
