@@ -14,6 +14,7 @@ import { styled } from "@mui/system";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Link } from "react-router-dom";
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -46,7 +47,15 @@ const MobileUserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position="sticky">
       <StyledToolBar>
@@ -71,10 +80,10 @@ const Navbar = () => {
             sx={{ width: 30, height: 30 }}
             alt="Suprit"
             src="https://media.licdn.com/dms/image/C4D03AQEFqvfKALmmBw/profile-displayphoto-shrink_800_800/0/1600649364027?e=2147483647&v=beta&t=DOK9jyzpSWn7dP2bmlhMdKVBhvb0xixnjShJ8smWyIA"
-            onClick={(e) => setOpen(true)}
+            onClick={handleClick}
           />
         </NavIcons>
-        <MobileUserBox onClick={(e) => setOpen(true)}>
+        <MobileUserBox onClick={handleClose}>
           <Avatar
             sx={{ width: 30, height: 30 }}
             alt="Suprit"
@@ -87,7 +96,8 @@ const Navbar = () => {
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
         open={open}
-        onClose={(e) => setOpen(false)}
+        onClose={handleClose}
+        anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -98,7 +108,9 @@ const Navbar = () => {
         }}
       >
         <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
+        <MenuItem>
+          <Link to="/contact">My account </Link>
+        </MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>
     </AppBar>

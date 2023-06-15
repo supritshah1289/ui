@@ -1,7 +1,7 @@
 // App.js
 
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import {
   Box,
   createTheme,
@@ -9,8 +9,7 @@ import {
   Stack,
   ThemeProvider,
 } from "@mui/material";
-import LoginPage from "./components/LoginPage";
-import HomePage from "./components/HomePage";
+
 import Sidebar from "./components/common/Sidebar";
 import Feed from "./components/common/Feed";
 import Rightbar from "./components/common/Rightbar";
@@ -28,12 +27,6 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={darkMode}>
-        {/* <Router>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </Router> */}
         {/* material ui: to box component we can pass which html elements we would like to use using component props. Example component="span" */}
         <Box bgcolor={"background.default"} color={"text.primary"}>
           <Navbar />
