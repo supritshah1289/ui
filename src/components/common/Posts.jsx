@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,8 +13,29 @@ import Favorite from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Checkbox } from "@mui/material";
+import { selectAllItems } from "../../reducers/Item/itemSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchItems } from "../../reducers/Item/itemSlice";
 
 const Posts = () => {
+  const dispatch = useDispatch();
+  const items = useSelector(selectAllItems);
+  const itemStatus = useSelector((state) => state.items.status);
+
+  useEffect(() => {
+    if (itemStatus === "idle") {
+      dispatch(fetchItems());
+    }
+  }, [itemStatus, dispatch]);
+
+  let content = [];
+  if (itemStatus === "loading") {
+    console.log("Loading...");
+  } else if (itemStatus === "succeeded") {
+    content = items;
+    console.log("Content:======" + JSON.stringify(content.items[0].title));
+  }
+
   return (
     <Card sx={{ margin: 5 }}>
       <CardHeader
@@ -28,20 +49,18 @@ const Posts = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Suprit Shah"
+        title={content.items[0].title}
         subheader="September 14, 2016"
       />
       <CardMedia
         component="img"
         height="10%"
-        image="https://cdn.loveandlemons.com/wp-content/uploads/2020/03/pantry-recipes-2.jpg"
+        image={content.items[0].image_url}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {content.items[0].description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

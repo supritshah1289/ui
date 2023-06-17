@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
-import { login } from "../reducers/authReducer";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -13,9 +12,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    // Dispatch login action with username and password
-    dispatch(login(username, password));
-    history.push("/"); // Redirect to home page after successful login
+    console.log("handleLogin");
   };
 
   return (
