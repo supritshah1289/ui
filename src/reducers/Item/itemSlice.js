@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
-  const response = await axios.get("http://localhost:8080/items");
+  const response = await axios.get(ITEMS_URL);
   return response.data;
 });
 
@@ -43,6 +43,7 @@ export const itemSlice = createSlice({
 // return all actions on these reducers
 export const { itemAdded } = itemSlice.actions;
 // from state return the data and assign to the variables
-export const selectAllItems = (state) => state.items;
+export const selectAllItems = (state) => state.items.items; // expects name of slice . name of data array
+export const selectStatus = (state) => state.status;
 // export the reducer
 export default itemSlice.reducer;
